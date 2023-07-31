@@ -14,7 +14,7 @@
 A tiny (< 2kb gzipped) HTTP wrapper with inbuilt routing and middleware support.
 
 ## Use
-To instanciate a new Pyotr server, simply use `app`:
+To instantiate a new Pyotr server, simply use `app`:
 ```ts
 import http from "http";
 
