@@ -82,12 +82,7 @@ export const handleRequest = async (
 ) => {
     const route = Array.from(app._routes).find((route) => matchRoute(request, route));
 
-    if (!route) {
-        response.writeHead(404, { "Content-Type": "application/json" });
-        response.end(JSON.stringify({ message: `Invalid http method: ${request.method}` }));
-
-        return;
-    }
+    if (!route) return;
 
     const responseData = await route.handler({
         request,
@@ -96,12 +91,7 @@ export const handleRequest = async (
         path: request.url,
     });
 
-    if (!responseData) {
-        response.writeHead(404, { "Content-Type": "application/json" });
-        response.end(JSON.stringify({ message: `Invalid http method: ${request.method}` }));
-
-        return;
-    }
+    if (!responseData) return;
 
     if (responseData.headers) {
         for (const [key, value] of Object.entries(responseData.headers)) {
