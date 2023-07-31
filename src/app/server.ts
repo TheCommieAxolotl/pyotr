@@ -1,9 +1,9 @@
-import { App } from "~/types";
+import { App } from "../types";
 
 import https, { Server } from "node:http";
 
-import { handleRequest } from "~/router";
-import { log } from "~/util/logger";
+import { handleRequest } from "../router";
+import { log } from "../util/logger";
 
 export const startServer = (app: Partial<App>, doLog = true) => {
     let server: Server;

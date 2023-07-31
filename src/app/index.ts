@@ -1,10 +1,10 @@
-import { App, AppDetails } from "~/types";
+import { App, AppDetails } from "../types";
 
 import { Server } from "node:http";
 
 import { startServer } from "./server";
-import { color } from "~/util/logger";
-import { Route } from "~/router";
+import { color } from "../util/logger";
+import { Route } from "../router";
 
 /**
  * Create a server instance. The resulting object can be used to attach routes or middleware.

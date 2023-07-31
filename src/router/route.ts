@@ -1,5 +1,5 @@
 import { IncomingMessage } from "http";
-import { ResponseData } from "~/aura";
+import { ResponseData } from "../aura";
 
 type Method = "get" | "post" | "put" | "delete" | "patch" | "head" | "options" | "update";
 

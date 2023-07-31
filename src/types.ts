@@ -1,5 +1,5 @@
+import { Route } from "./router/route";
 import { Server } from "node:http";
-import { Route } from "~/router";
 
 export interface AppDetails {
     /**

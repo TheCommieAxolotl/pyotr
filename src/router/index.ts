@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { App } from "~/types";
+import { App } from "../types";
 
-export { route, type Route } from "./route";
-import { Route } from "./route"; // wtf ts
+export { route } from "./route";
+import { Route } from "./route";
 
 const matchRoute = (req: IncomingMessage, route: Route): boolean => {
     const pathParts = req.url.split("/");
