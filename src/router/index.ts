@@ -96,6 +96,13 @@ export const handleRequest = async (
         path: request.url,
     });
 
+    if (!responseData) {
+        response.writeHead(404, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ message: `Invalid http method: ${request.method}` }));
+
+        return;
+    }
+
     if (responseData.headers) {
         for (const [key, value] of Object.entries(responseData.headers)) {
             response.setHeader(key, value);
