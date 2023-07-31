@@ -19,9 +19,11 @@
         "pyotr"
     ],
     "files": [
-        "dist"
+        "dist",
+        "index.d.ts",
+        "aura.d.ts"
     ],
-    "types": "dist/src/index.d.ts",
+    "types": "index.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/TheCommieAxolotl/pyotr.git"
