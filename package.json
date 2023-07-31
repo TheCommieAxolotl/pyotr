@@ -6,6 +6,7 @@
     "author": "TheCommieAxolotl",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
+    "packageManager": "pnpm@7.29.1",
     "keywords": [
         "http",
         "https",
