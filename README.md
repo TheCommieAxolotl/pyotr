@@ -5,6 +5,9 @@
     <a href="https://www.npmjs.com/package/pyotr" target="__blank">
         <img alt="Downloads" src="https://img.shields.io/npm/dm/pyotr?style=flat&colorA=171717&colorB=efd94e">
     </a>
+    <a>
+        <img alt="Bundle" src="https://img.shields.io/bundlephobia/minzip/pyotr?style=flat&label=Bundle%20Size&labelColor=%23171717&color=%23efd94e">
+    </a>
     <a href="https://github.com/TheCommieAxolotl/pyotr" target="__blank">
         <img alt="Stars" src="https://img.shields.io/github/stars/TheCommieAxolotl/pyotr?style=flat&colorA=171717&colorB=efd94e">
     </a>
