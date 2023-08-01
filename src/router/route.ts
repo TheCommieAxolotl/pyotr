@@ -15,6 +15,11 @@ export type Route = {
     path: string;
     method: Method | Method[];
     handler: (request: PyotrRequest) => ResponseData | Promise<ResponseData>;
+
+    /**
+     * Update the handler for this route.
+     */
+    update: (handler: Route["handler"]) => void;
 };
 
 /**
@@ -26,8 +31,16 @@ export type Route = {
  *     () => html`<h1>Hello, world!</h1>`
  * );
  */
-export const route = (path: Route["path"], handler: Route["handler"], method?: Route["method"]): Route => ({
-    path,
-    method: method || "get",
-    handler,
-});
+export const route = (path: Route["path"], handler: Route["handler"], method?: Route["method"]): Route => {
+    const self: Partial<Route> = {
+        path,
+        method: method || "get",
+        handler,
+    };
+
+    self.update = (handler: Route["handler"]) => {
+        self.handler = handler;
+    };
+
+    return self as Route;
+};
