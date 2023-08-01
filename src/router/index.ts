@@ -4,6 +4,11 @@ import { App } from "../types";
 export { route } from "./route";
 import { Route } from "./route";
 
+const bail = (response: ServerResponse<IncomingMessage>, status: number) => {
+    response.statusCode = status;
+    response.end();
+};
+
 const matchRoute = (req: IncomingMessage, route: Route): boolean => {
     const pathParts = req.url.split("/");
     const routeParts = route.path.split("/");
@@ -19,7 +24,19 @@ const matchRoute = (req: IncomingMessage, route: Route): boolean => {
         methodMatches = false;
     }
 
+    if (!route.path.includes("[...") && pathParts.length !== routeParts.length) {
+        pathMatches = false;
+
+        return pathMatches && methodMatches;
+    }
+
     for (let i = 0; i < pathParts.length; i++) {
+        if (routeParts[i] === undefined) {
+            pathMatches = false;
+
+            break;
+        }
+
         if (routeParts[i].startsWith("[...") && routeParts[i].endsWith("]")) {
             pathMatches = true;
             break;
@@ -86,7 +103,7 @@ export const handleRequest = async (
 ) => {
     const route = Array.from(app._routes).find((route) => matchRoute(request, route));
 
-    if (!route) return;
+    if (!route) return bail(response, 404);
 
     const responseData = await route.handler({
         request,
@@ -96,7 +113,7 @@ export const handleRequest = async (
         method: request.method.toLowerCase() as Parameters<Route["handler"]>[0]["method"],
     });
 
-    if (!responseData) return;
+    if (!responseData) return bail(response, 500);
 
     if (responseData.headers) {
         for (const [key, value] of Object.entries(responseData.headers)) {
