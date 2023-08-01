@@ -12,7 +12,7 @@ export interface PyotrRequest {
 
 export type Route = {
     path: string;
-    method: Method;
+    method: Method | Method[];
     handler: (request: PyotrRequest) => ResponseData | Promise<ResponseData>;
 };
 

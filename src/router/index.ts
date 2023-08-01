@@ -8,10 +8,14 @@ const matchRoute = (req: IncomingMessage, route: Route): boolean => {
     const pathParts = req.url.split("/");
     const routeParts = route.path.split("/");
 
+    if (!Array.isArray(route.method)) {
+        route.method = [route.method];
+    }
+
     let pathMatches = true;
     let methodMatches = true;
 
-    if (req.method.toLowerCase() !== route.method.toLowerCase()) {
+    if (!route.method.includes(req.method.toLowerCase() as Parameters<Route["handler"]>[0]["method"])) {
         methodMatches = false;
     }
 
