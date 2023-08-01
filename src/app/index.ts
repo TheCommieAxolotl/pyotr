@@ -4,7 +4,7 @@ import { Server } from "node:http";
 
 import { startServer } from "./server";
 import { color } from "../util/logger";
-import { Route } from "../router";
+import { Route } from "../router/route";
 
 /**
  * Create a server instance. The resulting object can be used to attach routes or middleware.
@@ -22,12 +22,7 @@ export const app = (options: number | Server, log = true): App => {
     const attach = (route: Route): boolean => {
         _routes.add(route);
 
-        if (log)
-            console.log(
-                ` - ${color(route.path, "blue")}${
-                    route.method.toUpperCase() !== "GET" ? ` (${route.method.toUpperCase()})` : ""
-                }`
-            );
+        if (log) console.log(` - ${color(route.path, "blue")}`);
 
         return true;
     };
