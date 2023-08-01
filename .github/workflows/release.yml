@@ -36,3 +36,10 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   VERSION: ${{ env.VERSION }}
+            - name: "Publish to NPM"
+              if: "startsWith(github.event.head_commit.message, 'release: ')"
+              run: |
+                  npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+                  pnpm publish
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
