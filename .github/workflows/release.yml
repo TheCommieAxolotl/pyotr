@@ -30,8 +30,9 @@ jobs:
             - name: "Create Release"
               if: "startsWith(github.event.head_commit.message, 'release: ')"
               run: |
-                  gh release upload stable dist/*.js --clobber
-                  gh release edit stable --title "v$VERSION"
+                  gh release create ${{ env.VERSION }} ./dist/*.js \
+                    --title ${{ env.VERSION }} \
+                    --notes "Grab this version of pyotr from [npm](https://npmjs.com/package/pyotr/v/${{ env.VERSION }})"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   VERSION: ${{ env.VERSION }}
