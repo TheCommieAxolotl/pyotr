@@ -93,6 +93,7 @@ export const handleRequest = async (
         params: getParams(request, route),
         query: getQuery(request),
         path: request.url,
+        method: request.method.toLowerCase() as Parameters<Route["handler"]>[0]["method"],
     });
 
     if (!responseData) return;

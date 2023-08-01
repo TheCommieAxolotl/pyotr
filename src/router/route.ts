@@ -7,6 +7,7 @@ export interface PyotrRequest {
     request: IncomingMessage;
     params: Record<string, string>;
     query: Record<string, string>;
+    method: Method;
     path: string;
 }
 
