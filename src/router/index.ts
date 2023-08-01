@@ -4,6 +4,8 @@ import { App } from "../types";
 export { route } from "./route";
 import { Route } from "./route";
 
+const _DATE = Date.now();
+
 const bail = (response: ServerResponse<IncomingMessage>, status: number) => {
     response.statusCode = status;
     response.end();
@@ -102,6 +104,8 @@ export const handleRequest = async (
     }
 ) => {
     const route = Array.from(app._routes).find((route) => matchRoute(request, route));
+
+    response.setHeader("X-Pyotr-Canonical", Date.now() - _DATE);
 
     if (!route) return bail(response, 404);
 
