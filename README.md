@@ -10,6 +10,12 @@
     </a>
 </p>
 
+---
+
+Want to test it out? Check out the [Hello World example](https://stackblitz.com/edit/pyotr?file=index.js)!
+
+---
+
 # Pyotr
 A tiny (< 2kb gzipped) HTTP wrapper with inbuilt routing and middleware support.
 
