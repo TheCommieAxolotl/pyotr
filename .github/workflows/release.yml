@@ -30,8 +30,8 @@ jobs:
             - name: "Create Release"
               if: "startsWith(github.event.head_commit.message, 'release: ')"
               run: |
-                  gh release create "v${{ env.VERSION }}"" ./dist/*.js \
-                    --title "v${{ env.VERSION }}"" \
+                  gh release create "v${{ env.VERSION }}" ./dist/*.js \
+                    --title "v${{ env.VERSION }}" \
                     --notes "Grab this version of pyotr from [npm](https://npmjs.com/package/pyotr/v/${{ env.VERSION }})"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
