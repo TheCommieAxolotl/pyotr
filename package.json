@@ -32,7 +32,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite build --watch",
-        "test": "vitest"
+        "test": "vitest",
+        "test:run": "node ./test/standalone.run.js"
     },
     "exports": {
         ".": {
