@@ -32,7 +32,7 @@ jobs:
               run: |
                   gh release create "v${{ env.VERSION }}" ./dist/*.js \
                     --title "v${{ env.VERSION }}" \
-                    --notes "Grab this version of pyotr from [npm](https://npmjs.com/package/pyotr/v/${{ env.VERSION }})"
+                    --generate-notes
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   VERSION: ${{ env.VERSION }}
