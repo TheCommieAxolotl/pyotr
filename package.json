@@ -1,6 +1,6 @@
 {
     "name": "pyotr",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "A tiny (< 2kb) HTTP wrapper with inbuilt routing and middleware support.",
     "type": "module",
     "author": "TheCommieAxolotl",
