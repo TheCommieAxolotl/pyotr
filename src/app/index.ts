@@ -2,9 +2,10 @@ import { App, AppDetails } from "../types";
 
 import { Server } from "node:http";
 
+import { Route } from "../router/route";
 import { startServer } from "./server";
 import { color } from "../util/logger";
-import { Route } from "../router/route";
+import { use } from "./use";
 
 /**
  * Create a server instance. The resulting object can be used to attach routes or middleware.
@@ -27,7 +28,7 @@ export const app = (options: number | Server, log = true): App => {
         return true;
     };
 
-    const app: Partial<App> = {
+    const app = {
         details,
         _routes,
         attach,
@@ -35,5 +36,5 @@ export const app = (options: number | Server, log = true): App => {
 
     const dispose = startServer(app, log);
 
-    return { ...app, dispose } as App;
+    return { ...app, dispose, use: use.bind(null, app) };
 };

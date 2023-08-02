@@ -1,3 +1,5 @@
+import { join } from "node:path";
+
 import { test } from "vitest";
 
 import { html, json, status, redirect } from "../src/aura";
@@ -8,6 +10,7 @@ const server = app(3000);
 const index = route("/", () => html`<h1>Hello World</h1>`);
 
 server.attach(index);
+await server.use(join(__dirname, "assets"));
 server.attach(route("/json", () => json({ hello: "world" })));
 server.attach(route("/redirect", () => redirect("/")));
 
@@ -37,6 +40,10 @@ test("standalone", async (t) => {
     // response sends accurate content
     const text = await response.text();
     t.expect(text).toBe("<h1>Hello World</h1>");
+
+    // server.use() works
+    const asset = await fetch("http://localhost:3000/about");
+    t.expect(asset.status).toBe(200);
 
     // response sends accurate MIME types
     const json = await fetch("http://localhost:3000/json");

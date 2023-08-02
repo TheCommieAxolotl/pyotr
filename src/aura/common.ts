@@ -1,4 +1,4 @@
-type MIME =
+export type MIME =
     | "text/html"
     | "application/json"
     | "text/plain"
