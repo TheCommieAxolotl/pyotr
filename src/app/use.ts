@@ -2,29 +2,28 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { App, UseOptions } from "../types";
-import { MIME, html } from "../aura";
 import { route } from "../router";
+import * as aura from "../aura";
 
-const typeFrom = (ext: string): MIME => {
+const typeFrom = (
+    ext: string
+): typeof aura.html | typeof aura.css | typeof aura.js | typeof aura.json | typeof aura.png | typeof aura.jpg => {
     switch (ext) {
         case ".html":
-            return "text/html";
+            return aura.html;
         case ".css":
-            return "text/css";
+            return aura.css;
         case ".js":
-            return "text/javascript";
+            return aura.js;
         case ".json":
-            return "application/json";
+            return aura.json;
         case ".png":
-            return "image/png";
+            return aura.png;
         case ".jpg":
-            return "image/jpeg";
-        case ".gif":
-            return "image/gif";
-        case ".svg":
-            return "image/svg+xml";
-        case ".ico":
-            return "image/x-icon";
+        case ".jpeg":
+            return aura.jpg;
+        default:
+            return aura.text;
     }
 };
 
@@ -63,7 +62,7 @@ export const use = async (
 
         let routePath = subpath ? path.join("/", subpath, file) : `/${file}`;
 
-        let contentType = "text/plain";
+        let contentType = aura.text;
 
         if (options.guessType) {
             contentType = typeFrom(path.extname(file));
@@ -74,9 +73,9 @@ export const use = async (
 
             if (routePath.endsWith("index")) routePath = routePath.slice(0, -5);
 
-            app.attach(route(routePath, async () => html(await fs.readFile(p, "utf-8"))));
+            app.attach(route(routePath, async () => contentType(await fs.readFile(p, "utf-8"))));
         } else {
-            app.attach(route(routePath, async () => html(await fs.readFile(p, "utf-8"))));
+            app.attach(route(routePath, async () => contentType(await fs.readFile(p, "utf-8"))));
         }
 
         continue;
