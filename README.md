@@ -20,7 +20,7 @@ Want to test it out? Check out the [Hello World example](https://stackblitz.com/
 ---
 
 # Pyotr
-A tiny (< 2kb gzipped) HTTP wrapper with inbuilt routing and middleware support.
+A tiny (< 2kb gzipped) 0-dependency HTTP wrapper with inbuilt routing and middleware support.
 
 ## Use
 To instantiate a new Pyotr server, simply use `app`:
