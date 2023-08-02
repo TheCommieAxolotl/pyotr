@@ -2,7 +2,7 @@ import { test } from "vitest";
 
 import { createServer } from "http";
 
-import { html, json, status } from "../src/aura";
+import { html, json, status, redirect } from "../src/aura";
 import { app, route } from "../src";
 
 const myOwnServer = createServer();
@@ -15,6 +15,7 @@ const index = route("/", () => html`<h1>Hello World</h1>`);
 
 server.attach(index);
 server.attach(route("/json", () => json({ hello: "world" })));
+server.attach(route("/redirect", () => redirect("/")));
 
 test("byos", async (t) => {
     server.attach(
@@ -30,6 +31,10 @@ test("byos", async (t) => {
 
     // server is a Server instance
     t.expect(server).toBeTruthy();
+
+    // redirects work
+    const redirect = await fetch("http://localhost:4000/redirect");
+    t.expect(redirect.redirected).toBe(true);
 
     // response sends accurate status codes
     const response = await fetch("http://localhost:4000/");
