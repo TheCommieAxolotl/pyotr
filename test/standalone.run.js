@@ -8,7 +8,12 @@ server.attach(route("/json", () => json({ hello: "world" })));
 
 server.attach(
     route("/path/[e]", (e) => {
-        return json(e);
+        return json({
+            params: e.params,
+            query: e.query,
+            method: e.method,
+            path: e.path,
+        });
     })
 );
 
