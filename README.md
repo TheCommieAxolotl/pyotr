@@ -57,3 +57,35 @@ const useOptions = {
 
 server.use(resolve("./routes"), useOptions);
 ```
+
+### Route Handlers
+Route handlers are functions that are called when a request is made to a route. They are passed a [`PyotrRequest`]("https://github.com/TheCommieAxolotl/pyotr/blob/main/src/router/route.ts#L6-L12") object and may return a subset of Response options.
+
+```ts
+import { app, route } from "pyotr";
+
+const server = app(3000);
+
+server.attach(route("/", (req) => {
+    const { request, method, path, query, params } = req;
+
+    return {
+        type: string, // MIME type
+        content: string,
+        status: number, // HTTP status code
+        redirect: string, // redirect URL (should also set status to 302)
+        headers: Record<string, string>
+    };
+}));
+```
+
+You can also update an existing route's handler by calling `route.update`:
+```ts
+const myRoute = route(...)
+
+server.attach(myRoute);
+
+myRoute.update((req) => {
+    // ...
+});
+```
