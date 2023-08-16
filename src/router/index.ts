@@ -6,8 +6,10 @@ import { Route } from "./route";
 
 const _DATE = Date.now();
 
-const bail = (response: ServerResponse<IncomingMessage>, status: number) => {
+const bail = (response: ServerResponse<IncomingMessage>, method: string, status: number) => {
     response.statusCode = status;
+    response.write(`Cannot ${method} ${response.req.url}`);
+
     response.end();
 };
 
@@ -107,7 +109,7 @@ export const handleRequest = async (
 
     response.setHeader("X-Pyotr-Canonical", Date.now() - _DATE);
 
-    if (!route) return bail(response, 404);
+    if (!route) return bail(response, request.method, 404);
 
     const responseData = await route.handler({
         request,
@@ -117,7 +119,7 @@ export const handleRequest = async (
         method: request.method.toLowerCase() as Parameters<Route["handler"]>[0]["method"],
     });
 
-    if (!responseData) return bail(response, 500);
+    if (!responseData) return bail(response, request.method, 500);
 
     if (responseData.headers) {
         for (const [key, value] of Object.entries(responseData.headers)) {
