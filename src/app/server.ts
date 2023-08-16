@@ -27,14 +27,14 @@ export const startServer = (app: Partial<App>, doLog = true) => {
         );
         log(`Press Ctrl+C to exit process.`, ANSI.yellow);
         log("");
-        log("Page Routes", ANSI.bold);
+        log(" ROUTES ", ANSI.bg_blue, ANSI.bold);
     }
 
     return () => {
         return new Promise<boolean>((resolve) => {
             if (server.listening) {
                 server.close(() => {
-                    if (doLog) log("Server closed.", ANSI.red);
+                    if (doLog) log(" SERVER CLOSED ", ANSI.bg_red);
 
                     resolve(true);
                 });
