@@ -2,9 +2,9 @@ import { App, AppDetails } from "../types";
 
 import { Server } from "node:http";
 
+import { ANSI, color } from "../util/logger";
 import { Route } from "../router/route";
 import { startServer } from "./server";
-import { color } from "../util/logger";
 import { use } from "./use";
 
 /**
@@ -23,7 +23,7 @@ export const app = (options: number | Server, log = true): App => {
     const attach = (route: Route): boolean => {
         _routes.add(route);
 
-        if (log) console.log(` - ${color(route.path, "blue")}`);
+        if (log) console.log(` - ${color(route.path, ANSI.blue)}`);
 
         return true;
     };

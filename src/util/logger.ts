@@ -1,4 +1,4 @@
-export enum ASCII {
+export enum ANSI {
     reset = "\x1b[0m",
     bold = "\x1b[1m",
     dim = "\x1b[2m",
@@ -24,34 +24,38 @@ export enum ASCII {
     bg_white = "\x1b[47m",
 }
 
-export const log = (message: string, ...colors: (keyof typeof ASCII)[]): void => {
+export const log = (message: string | Error, ...colors: ANSI[]): void => {
+    if (message instanceof Error) {
+        message = `\n${color(" ERROR ", ANSI.bg_red)} ${message.message}`;
+    }
+
     console.log(
         colors
             .map((color) => {
-                if (color.toLowerCase() in ASCII) {
-                    return ASCII[color.toLowerCase()];
+                if (color.toLowerCase() in ANSI) {
+                    return ANSI[color.toLowerCase()];
                 } else {
                     return color;
                 }
             })
             .join("") +
             message +
-            ASCII.reset
+            ANSI.reset
     );
 };
 
-export const color = (message: string, ...colors: string[]): string => {
+export const color = (message: string, ...colors: ANSI[]): string => {
     return (
         colors
             .map((color) => {
-                if (color.toLowerCase() in ASCII) {
-                    return ASCII[color.toLowerCase()];
+                if (color.toLowerCase() in ANSI) {
+                    return ANSI[color.toLowerCase()];
                 } else {
                     return color;
                 }
             })
             .join("") +
         message +
-        ASCII.reset
+        ANSI.reset
     );
 };

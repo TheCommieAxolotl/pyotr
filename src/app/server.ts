@@ -2,8 +2,8 @@ import { App } from "../types";
 
 import https, { Server } from "node:http";
 
+import { ANSI, log } from "../util/logger";
 import { handleRequest } from "../router";
-import { log } from "../util/logger";
 
 export const startServer = (app: Partial<App>, doLog = true) => {
     let server: Server;
@@ -23,18 +23,18 @@ export const startServer = (app: Partial<App>, doLog = true) => {
     if (doLog) {
         log(
             `Listening${app.details["port"] ? ` on http://localhost:${app.details["port"]}/` : " to Server"}`,
-            "magenta"
+            ANSI.magenta
         );
-        log(`Press Ctrl+C to exit process.`, "yellow");
+        log(`Press Ctrl+C to exit process.`, ANSI.yellow);
         log("");
-        log("Page Routes", "bold");
+        log("Page Routes", ANSI.bold);
     }
 
     return () => {
         return new Promise<boolean>((resolve) => {
             if (server.listening) {
                 server.close(() => {
-                    if (doLog) log("Server closed.", "red");
+                    if (doLog) log("Server closed.", ANSI.red);
 
                     resolve(true);
                 });

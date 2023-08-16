@@ -1,3 +1,5 @@
+import { log } from "../util/logger";
+
 export type MIME =
     | "text/html"
     | "application/json"
@@ -27,11 +29,30 @@ export type ResponseData = {
     headers?: Record<string, string>;
 };
 
-const make = (type: MIME, content: string | TemplateStringsArray): ResponseData => ({
-    type,
-    content: String(content),
-    status: 200,
-});
+const make = (type: MIME, content: string | TemplateStringsArray | []): ResponseData => {
+    if (Array.isArray(content))
+        return {
+            type: "text/plain",
+            content: "Uncaught server error",
+            status: 500,
+        };
+
+    try {
+        return {
+            type,
+            content: String(content),
+            status: 200,
+        };
+    } catch (e) {
+        log(e as Error);
+
+        return {
+            type: "text/plain",
+            content: "Uncaught server error",
+            status: 500,
+        };
+    }
+};
 
 export const error = (status: number, content: string | TemplateStringsArray) => ({
     type: "text/plain",
@@ -52,7 +73,17 @@ export const html = (content: string | TemplateStringsArray) => make("text/html"
  * Create a response object for JSON content.
  */
 export const json = (content: object | string | TemplateStringsArray) =>
-    make("application/json", typeof content === "string" ? content : JSON.stringify(content));
+    make(
+        "application/json",
+        (() => {
+            try {
+                return typeof content === "string" ? content : JSON.stringify(content);
+            } catch (e) {
+                log(e as Error);
+                return [];
+            }
+        })()
+    );
 /**
  * Create a response object for plaintext content.
  */
