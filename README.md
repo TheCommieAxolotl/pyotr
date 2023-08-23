@@ -56,7 +56,7 @@ const useOptions = {
     guessTypes: true, // guess the MIME type of files (e.g. text/css for .css files)
 };
 
-server.use(resolve(__dirname, "./routes"), useOptions);
+server.use(resolve(process.cwd(), "./routes"), useOptions);
 ```
 
 ### Route Handlers
