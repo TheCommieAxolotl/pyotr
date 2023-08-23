@@ -26,7 +26,7 @@ export default defineConfig({
         },
         outDir: "dist",
         rollupOptions: {
-            external: ["node:http", ...builtinModules],
+            external: ["node:http", "node:fs/promises", "node:fs", "node:path", ...builtinModules],
             plugins: [!IS_DEV && terser({})].filter(Boolean),
         },
     },
