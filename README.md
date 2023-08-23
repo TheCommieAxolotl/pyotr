@@ -45,6 +45,7 @@ server.attach(route("/", () => html`<h1>Hello, world!</h1>`));
 
 If you want to use a whole directory as routes, instead of adding them one by one, you can use `app.use`:
 ```ts
+import { resolve } from "node:path"
 import { app } from "pyotr";
 
 const server = app(3000);
@@ -55,7 +56,7 @@ const useOptions = {
     guessTypes: true, // guess the MIME type of files (e.g. text/css for .css files)
 };
 
-server.use(resolve("./routes"), useOptions);
+server.use(resolve(__dirname, "./routes"), useOptions);
 ```
 
 ### Route Handlers
